@@ -4,7 +4,6 @@ public class Bank{
         private String name;
         private String address;
         private int SSN;
-        private int ID;
         private double balance;
 
         //Constructors
@@ -12,7 +11,6 @@ public class Bank{
             this.name = name;
             this.address = address;
             this.SSN = SSN;
-            this.ID = getLastID() + 1;
             this.balance = balance;
         }
 
@@ -33,12 +31,12 @@ public class Bank{
             return this.SSN;
         }
 
-        public int getID(){
-            return this.ID;
-        }
-
         public double getBalance(){
             return this.balance;
+        }
+
+        public String toString(){
+            return String.format("Name: %s\nAddress: %s\nSSN: %s\nBalance: %s\n", this.name, this.address, this.SSN, this.balance);
         }
 
         //Setter Methods
@@ -61,15 +59,18 @@ public class Bank{
 
     //Constructors
     Bank(){
-        this.Accounts = new LinkedList();
+        this.Accounts = new LinkedList<Account>();
     }
 
     //Getter Methods
-    private int getLastID(){
-        if (this.Accounts.getHead() == null)
-            return 0;
-        else
-            return this.Accounts.getLastNode().getData().getID();
+
+    //For testing purposes only
+    public void print(){
+        if (Accounts.isEmpty())
+            System.out.println("No bank accounts");
+        else{
+            this.Accounts.print();
+        }
     }
 
     //Setter Methods
@@ -79,5 +80,9 @@ public class Bank{
 
     public void addUser(Account user){
         this.Accounts.addNode((user));
+    }
+
+    public void deleteUser(int ID){
+        this.Accounts.deleteNode(ID);
     }
 }

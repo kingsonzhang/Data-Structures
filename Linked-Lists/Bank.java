@@ -35,6 +35,7 @@ public class Bank{
             return this.balance;
         }
 
+        @Override
         public String toString(){
             return String.format("Name: %s\nAddress: %s\nSSN: %s\nBalance: %s\n", this.name, this.address, this.SSN, this.balance);
         }
@@ -55,6 +56,14 @@ public class Bank{
         public void setBalance(double balance){
             this.balance = balance;
         }
+
+        public void deposit(double amount){
+            this.balance += amount;
+        }
+
+        public void withdraw(double amount){
+            this.balance -= amount;
+        }
     }
 
     //Constructors
@@ -74,8 +83,12 @@ public class Bank{
     }
 
     //Setter Methods
+    public void addUser(String name, String address, int SSN, double balance){
+        this.Accounts.addNode(new Account(name, address, SSN, balance));
+    }
+
     public void addUser(String name, String address, int SSN){
-        this.Accounts.addNode(new Account(name, address, SSN));
+        this.addUser(name, address, SSN, 0.0);
     }
 
     public void addUser(Account user){
@@ -84,5 +97,14 @@ public class Bank{
 
     public void deleteUser(int ID){
         this.Accounts.deleteNode(ID);
+    }
+
+    public void payToUser(int payerID, int payeeID, double amount){
+        Account payer = this.Accounts.findNode(payerID);
+        Account payee = this.Accounts.findNode(payeeID);
+        if (payer != null && payee != null){
+            payer.withdraw(amount);
+            payee.deposit(amount);
+        }
     }
 }

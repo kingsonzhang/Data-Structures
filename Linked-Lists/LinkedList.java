@@ -49,6 +49,16 @@ public class LinkedList<T>{
         return this.head;
     }
 
+    public T findNode(int ID){
+        Node current = this.head;
+        while (current != null){
+            if (current.getID() == ID)
+                return current.getData();
+            current = current.getNextNode();
+        }
+        return null;
+    }
+
     public Node getLastNode(){
         Node current = this.head;
         while (current.getNextNode() != null)

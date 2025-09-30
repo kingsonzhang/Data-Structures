@@ -42,7 +42,7 @@ public class Bank{
         //For testing purposes only
         @Override
         public String toString(){
-            return String.format("Name: %s\nAddress: %s\nSSN: %s\nBalance: %s\n", this.name, this.address, this.SSN, this.balance);
+            return String.format("Name: %s\nAddress: %s\nSSN: %s\nBalance: %s", this.name, this.address, this.SSN, this.balance);
         }
 
         //Setter Methods
@@ -80,8 +80,20 @@ public class Bank{
     }
 
     //Getter Methods
-    public int getMedianID(){
-        return this.Accounts.findMedianID();
+    public Integer getHeadIndex(){
+        return this.Accounts.getHeadIndex();
+    }
+
+    public int getMedianIndex(){
+        return this.Accounts.findMedianIndex();
+    }
+
+    public void emptyAccounts(){
+        this.Accounts.findEmptyIndexes().print();
+    }
+
+    public boolean isEmpty(){
+        return this.Accounts.isEmpty();
     }
 
     //For testing purposes only
@@ -92,7 +104,6 @@ public class Bank{
             this.Accounts.print();
         }
     }
-
     //Setter Methods
     //addUser takes in information and adds a new Account into the LinkedList at the first available ID (empty slot)
     //Functionality of inserting is handled by LinkedList class, only have to pass data along
@@ -110,10 +121,18 @@ public class Bank{
         this.Accounts.addNode((user));
     }
 
+    public void addUser(Account user, int index){
+        this.Accounts.addNodeAtIndex(user, index);
+    }
+
     //delete removes and account from the LinkedList of accounts
     //Similar to addUser, functionatly is handled by LinkedList, only pass ID of the account
     public void deleteUser(int ID){
         this.Accounts.deleteNode(ID);
+    }
+
+    public Account deleteFirstUser(){
+        return Accounts.deleteFirstNode();
     }
 
     //Finds two accounts from the LinkedList of accounts, removes amount from first account, adds amount to second account
@@ -121,8 +140,8 @@ public class Bank{
     //LinkedList handles finding of account by ID
     //Accounts are passed back to Bank, and withdraw and deposit handled by Account class
     public void payToUser(int payerID, int payeeID, double amount){
-        Account payer = this.Accounts.findNode(payerID);
-        Account payee = this.Accounts.findNode(payeeID);
+        Account payer = this.Accounts.findData(payerID);
+        Account payee = this.Accounts.findData(payeeID);
         if (payer != null && payee != null){
             payer.withdraw(amount);
             payee.deposit(amount);
@@ -135,20 +154,56 @@ public class Bank{
     public void mergeAccounts(int firstID, int secondID){
         int smallerID = firstID < secondID ? firstID : secondID;
         int largerID = firstID < secondID ? secondID : firstID;
-        Account first = this.Accounts.findNode(smallerID);
-        Account second = this.Accounts.findNode(largerID);
+        Account first = this.Accounts.findData(smallerID);
+        Account second = this.Accounts.findData(largerID);
         if (first.getName().equals(second.getName()) && first.getAddress().equals(second.getAddress()) &&  first.getSSN() == second.getSSN()){
             first.deposit(second.getBalance());
             this.Accounts.deleteNode(largerID);
         }
     }
 
-    //mergeBank is a little poorly written. The parameter Bank is the one that becomes the main merged bank
-    //Self Bank loses all Accounts, and parameter Bank will add all Accounts of current Bank
-    public void mergeBanks(Bank combinedBank){
-        while (!this.Accounts.isEmpty()){
-            combinedBank.addUser(this.Accounts.getHead().getData());
-            this.Accounts.deleteFirstNode();
+    public Bank mergeBanks(Bank bankOne, Bank bankTwo){
+        LinkedList<Account> merged = new LinkedList<>();
+        LinkedList<Account> conflicted = new LinkedList<>();
+        Integer bankOneFirstIndex = bankOne.getHeadIndex();
+        Integer bankTwoFirstIndex = bankTwo.getHeadIndex();
+        while (bankOneFirstIndex != null || bankTwoFirstIndex != null){
+            if (bankOneFirstIndex == null){
+                while (bankTwoFirstIndex != null){
+                    merged.addNodeAtIndex(bankTwo.deleteFirstUser(), bankTwoFirstIndex);
+                    bankTwoFirstIndex = bankTwo.getHeadIndex();
+                }
+            }
+            else if (bankTwoFirstIndex == null){
+                while (bankOneFirstIndex != null){
+                    merged.addNodeAtIndex(bankOne.deleteFirstUser(), bankOneFirstIndex);
+                    bankOneFirstIndex = bankOne.getHeadIndex();
+                }
+            }
+            else{
+                if (bankOneFirstIndex.compareTo(bankTwoFirstIndex) == 0){
+                    merged.addNodeAtIndex(bankOne.deleteFirstUser(), bankOneFirstIndex);
+                    conflicted.addNode(bankTwo.deleteFirstUser());
+                    bankOneFirstIndex = bankOne.getHeadIndex();
+                    bankTwoFirstIndex = bankTwo.getHeadIndex();
+                }
+                else if (bankOneFirstIndex.compareTo(bankTwoFirstIndex) < 0){
+                    merged.addNodeAtIndex(bankOne.deleteFirstUser(), bankOneFirstIndex);
+                    bankOneFirstIndex = bankOne.getHeadIndex();
+                }
+                else{
+                    merged.addNodeAtIndex(bankTwo.deleteFirstUser(), bankTwoFirstIndex);
+                    bankTwoFirstIndex = bankTwo.getHeadIndex();
+                }
+            }
         }
+        Bank combinedBank = new Bank();
+        while(!merged.isEmpty()){
+            int index = merged.getHeadIndex().intValue();
+            combinedBank.addUser(merged.deleteFirstNode(), index);
+        }
+        while(!conflicted.isEmpty())
+            combinedBank.addUser(conflicted.deleteFirstNode());
+        return combinedBank;
     }
 }

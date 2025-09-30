@@ -15,13 +15,12 @@ public class Tester{
         bankOfLosAngeles.addUser("James Bond", "Claremont", 90213, 80000);
         bankOfLosAngeles.addUser("Helen Park", "Lakewood", 90265, 75000);
         bankOfLosAngeles.addUser("Frank Thomas", "Pasadena", 90301, 125000);
+        bankOfLosAngeles.addUser("Bob Builder", "Annaheim", 90356, 200000);
+        bankOfLosAngeles.deleteUser(0);
         bankOfLosAngeles.deleteUser(4);
         bankOfLosAngeles.payToUser(1, 2, 10000);
-        //bankOfLosAngeles.print();
-        //System.out.println(bankOfLosAngeles.getMedianID());
-
-        bankOfOrangeCounty.mergeBanks(bankOfLosAngeles);
-        bankOfOrangeCounty.print();
-        bankOfLosAngeles.print();
+        
+        Bank californiaBank = bankOfLosAngeles.mergeBanks(bankOfLosAngeles, bankOfOrangeCounty);
+        californiaBank.print();
     }
 }

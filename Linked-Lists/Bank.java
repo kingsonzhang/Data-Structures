@@ -162,6 +162,22 @@ public class Bank{
         }
     }
 
+    //mergeBanks method will return a Bank with a merged LinkedList from
+    //two given Bank parameters
+
+    //Create two empty LinkedLists, one called merged, and one called conflicted
+    //Merged will hold the merged accounts between the two banks depending on the ID
+    //Conflicted will hold conflicted account from bankTwo if accounts from both
+    //BankOne and BankTwo have the same ID
+
+    //Keep iterating through both banks and sort the accounts of both banks into merged and conflicted
+    //IDs do not have to be sequential order during the merge
+
+    //Once all accounts have been interated through and deleted in both banks
+    //Merge already has all the non conflicted accounts and handled the conflicted accounts
+    //Conflicted will now be added into the merged LinkedList, inserting each individual account
+    //into the first available ID slot
+    //Return the new Bank with the merged LinkedList
     public Bank mergeBanks(Bank bankOne, Bank bankTwo){
         LinkedList<Account> merged = new LinkedList<>();
         LinkedList<Account> conflicted = new LinkedList<>();
@@ -199,7 +215,7 @@ public class Bank{
         }
         Bank combinedBank = new Bank();
         while(!merged.isEmpty()){
-            int index = merged.getHeadIndex().intValue();
+            int index = merged.getHeadIndex();
             combinedBank.addUser(merged.deleteFirstNode(), index);
         }
         while(!conflicted.isEmpty())

@@ -1,5 +1,5 @@
 public class Calculator{
-        public static void main(String args[]){
+    public static void main(String args[]){
         Calculator tester = new Calculator();
         try{
             System.out.println(tester.calculate("( 6 + 3 ) * 5 + ( 10 + 2 ) / 3"));
@@ -8,7 +8,17 @@ public class Calculator{
         }
     }
 
-    //Constructor
+    //Calculate will return the result of the evaluated expression
+    //Will throw an exception if the expression is empty
+    //Expression will empty if the postfix notation conversion receives an invalid expression
+
+    //Once postfix notation has been received, follow these steps
+    //Create a stack and begin to dequeue the numbers
+    //If a number is encountered, push it onto the stack
+    //If an operation is encountered, pop two numbers off the stack, and operate
+    //Push the result of the operation onto the stack
+    //Result should be one final number on the stack
+    //Pop said number off the stack and return
     public double calculate(String expression) throws Exception{
         Queue postfix = this.convertToPostfix(expression);
         if (postfix != null){
@@ -36,6 +46,20 @@ public class Calculator{
         }
     }
 
+    //Converts an expression into postfix notation
+    //Will throw an exception if expression is not valid
+
+    //Step by step rules for how postfix conversion works
+    //Create a stack and queue. The queue will hold the converted postfix notation
+
+    //When a "(" is encountered, immediately push onto the stack
+    //When a ")" is encountered, immediately pop everything onto the stack and enqueue into the queue
+    //until a "(" is encountered. If not encountered, invalid expression
+
+    //When either a "*" or "/" is encountered, immediately push onto the stack
+    //When either a "+" or "-" is encountered, pop all "*" and "/" signs and enqueue them
+
+    //When a number is encountered, immediately enqueue the number
     private Queue convertToPostfix(String expression) throws Exception{
         Queue postfixNotation = new Queue();
         String[] pieces = expression.split(" ");
@@ -78,7 +102,8 @@ public class Calculator{
             return null;
         return postfixNotation;
     }
-
+    
+    //Helper method to determine if a string is a valid number
     private boolean isInteger(String str) {
         if (str == null)
             return false;

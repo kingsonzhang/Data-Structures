@@ -7,7 +7,7 @@ public class Hashtable{
     //Set the MAXSIZE for the Hashtable. For now, collisions will be handled using
     //Seperate Chaining
     //Hashtable is essentially an Array of size MAXSIZE of LinkedLists
-    private final int MAXSIZE = 101;
+    private final int MAXSIZE = 1003;
     private ArrayList<ArrayList<String>> table;
     public static void main(String args[]){
         Hashtable anagramRoots = new Hashtable();
@@ -20,7 +20,7 @@ public class Hashtable{
             //Sort the letters alphabetically, convert the letters back into a string
             //Insert the anagram root word into the Hashtable
             while (fileReader.hasNextLine()){
-                String[] line = fileReader.nextLine().split("\\W+");
+                String[] line = fileReader.nextLine().split("[^a-zA-Z0-9]+");
                 for (int i = 0; i < line.length; i++){
                     if (!line[i].equals("") && line[i] != null){
                         int[] letters = anagramRoots.stringToValue(line[i]);
@@ -52,7 +52,7 @@ public class Hashtable{
         char[] letters = word.toCharArray();
         for (int i = 0; i < letters.length; i++)
             sum += (int) Character.toLowerCase(letters[i]);
-        return sum % MAXSIZE;
+        return (sum * 13) % MAXSIZE;
     }
 
     //Find the hash of the word, and insert it into the private array of LinkedLists

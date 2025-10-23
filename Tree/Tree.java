@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -208,5 +209,10 @@ public class Tree<T extends Comparable<T>>{
                 }
             }
         }
+    }
+
+    public void insert(ArrayList<Integer> maxHeap) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 }

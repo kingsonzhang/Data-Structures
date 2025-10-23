@@ -8,17 +8,7 @@ public class Calculator{
         }
     }
 
-    //Calculate will return the result of the evaluated expression
-    //Will throw an exception if the expression is empty
-    //Expression will empty if the postfix notation conversion receives an invalid expression
-
-    //Once postfix notation has been received, follow these steps
-    //Create a stack and begin to dequeue the numbers
-    //If a number is encountered, push it onto the stack
-    //If an operation is encountered, pop two numbers off the stack, and operate
-    //Push the result of the operation onto the stack
-    //Result should be one final number on the stack
-    //Pop said number off the stack and return
+    
     public double calculate(String expression) throws Exception{
         Queue postfix = this.convertToPostfix(expression);
         if (postfix != null){

@@ -13,10 +13,10 @@ public class HeapSort{
         }	
     }
 
-    void heapify(int array[], int size, int root){
+    private void heapify(int array[], int size, int root){
         int largest = root;
-        int left = 2 * root + 1; // left = 2*i + 1
-        int right = 2 * root + 2; // right = 2*i + 2
+        int left = 2 * root + 1;
+        int right = 2 * root + 2;
 
         // If left child is larger than root
         if (left < size && array[left] > array[largest])
@@ -25,8 +25,6 @@ public class HeapSort{
         // If right child is larger than largest so far
         if (right < size && array[right] > array[largest])
             largest = right;
-
-        // If largest is not root
         if (largest != root) {
             int temp = array[root];
             array[root] = array[largest];

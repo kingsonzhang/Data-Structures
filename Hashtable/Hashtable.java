@@ -7,7 +7,7 @@ public class Hashtable{
     //Set the MAXSIZE for the Hashtable. For now, collisions will be handled using
     //Seperate Chaining
     //Hashtable is essentially an Array of size MAXSIZE of LinkedLists
-    private final int MAXSIZE = 1003;
+    private final int MAXSIZE = 1009;
     private ArrayList<ArrayList<String>> table;
     public static void main(String args[]){
         Hashtable anagramRoots = new Hashtable();
@@ -30,6 +30,7 @@ public class Hashtable{
                 }
             }
             System.out.println(anagramRoots.size());
+            System.out.println(anagramRoots.maxCollisions());
             fileReader.close();
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -52,7 +53,15 @@ public class Hashtable{
         char[] letters = word.toCharArray();
         for (int i = 0; i < letters.length; i++)
             sum += (int) Character.toLowerCase(letters[i]);
-        return (sum * 13) % MAXSIZE;
+        return (sum * 101) % MAXSIZE;
+    }
+
+    public int maxCollisions(){
+        int collisions = 0;
+        for (int i = 0; i < this.table.size(); i++){
+            collisions = this.table.get(i).size() > collisions ? this.table.get(i).size() : collisions;
+        }
+        return collisions;
     }
 
     //Find the hash of the word, and insert it into the private array of LinkedLists

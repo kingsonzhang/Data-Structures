@@ -1,25 +1,12 @@
-//Need to rewrite most of the class
-//Must have insertAtIndex
-//Delete should remove and return the node, so merge can create a new LinkedList of accounts to add
-//Create a find emptyIndexes that returns a LinkedList of ints of emptyIndexes
-
-/*
-What's the logic here?
-Calling merge will make the current bank find all the empty indexes of the current Accounts linkedlist
-That will return a LinkedList of empty indexes
-Iterate through the parameter bank and find all the accounts at the given indexes, returned in a LinkedList
-The accounts can be null, the merge function will handle null accounts
-Honestly maybe just make a Stack and Queue
-*/
-
+/**
+ * LinkedList imitates the LinkedList library from java.util
+ * Creates an array of generic type items with dynamic memory
+ */
 public class LinkedList<T>{
-    //LinkedList holds the start of a List of Nodes
-    //Nodes hold type T data (for this exercise, will be type Account) and a pointer to the next Node or null
-    //Count holds how many type T items are in the list
-    //Node handles the ID (index) of each Node.
     private Node head;
     private int count;
-    public class Node{
+
+    private class Node{
         private T data;
         private int index;
         private Node next;
@@ -56,30 +43,34 @@ public class LinkedList<T>{
     }
 
     //Constructor
-    //Default LinkedList holds an empty list, pointing to null
     LinkedList(){
         this.head = null;
         this.count = 0;
     }
 
     //Getter Methods
-    //isEmpty returns if the LinkedList is empty
+    /**
+     * Checks if LinkedList is empty
+     * @return true if the LinkedList holds no type T data
+     */
     public boolean isEmpty(){
         return this.head == null;
     }
 
-    //getHead returns the head of the LinkedList
     protected Node getHeadNode(){
         return this.head;
     }
 
+    /**
+     * Access the data at the beginning of the LinkedList
+     * @return type T data, the first element in the LinkedList. Will return null if LinkedList is empty
+     */
     public T getHead(){
         if (this.isEmpty())
             return null;
         return this.getHeadNode().getData();
     }
 
-    //Returns the last Node in the LinkedList
     protected Node getLastNode(){
         Node current = this.getHeadNode();
         while (current.getNextNode() != null)
@@ -87,15 +78,21 @@ public class LinkedList<T>{
         return current;
     }
 
+    /**
+     * Access the index of the first element in the LinkedList
+     * @return int index of the first element, returns null if LinkedList is empty
+     */
     public Integer getHeadIndex(){
         if (this.isEmpty())
             return null;
         return this.getHeadNode().getIndex();
     }
 
-    //Return the data, not the Node, of the Node with the given parameter index
-    //User should not be able to see how LinkedList works behind the scenes, so Node is never seen
-    //Returns null if Node does not exist at index
+    /**
+     * Find the data at the parameter index
+     * @param index of the element to find
+     * @return type T data at the parameter index, otherwise return null if element at index does not exist
+     */
     public T findData(int index){
         Node current = this.getHeadNode();
         while (current != null){
@@ -106,7 +103,10 @@ public class LinkedList<T>{
         return null;
     }
 
-    //Finds the middle index of the LinkedList. Defaults to first Node in an even split situation
+    /**
+     * Finds the median index for the entire LinkedList. For even number elements, returns the median for the middle left element
+     * @return int median index of the LinkedList
+     */
     public int findMedianIndex(){
         int start = Math.ceilDiv(this.count, 2);
         Node current = this.getHeadNode();

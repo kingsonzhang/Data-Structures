@@ -7,6 +7,7 @@ public class StackWithTwoQueues{
         this.stack = new Queue();
         this.helper = new Queue();
     }
+    
     //Getter Methods
     public Object peek(){
         return this.stack.poll();

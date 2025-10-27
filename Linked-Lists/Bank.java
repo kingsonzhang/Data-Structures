@@ -1,7 +1,4 @@
 public class Bank{
-    //Bank will hold a LinkedList of Accounts
-    //Accounts is a class that holds 4 private data and additional methods
-    //Data will be user name, user address, user Social Security Number, and bank balance
     private LinkedList<Account> Accounts;
     public class Account{
         private String name;
@@ -15,11 +12,6 @@ public class Bank{
             this.address = address;
             this.SSN = SSN;
             this.balance = balance;
-        }
-
-        //Account Constructor without a balance variable defaults to 0 balance
-        Account(String name, String address, int SSN){
-            this(name, address, SSN, 0.0);
         }
 
         //Getter Methods
@@ -39,7 +31,6 @@ public class Bank{
             return this.balance;
         }
 
-        //For testing purposes only
         @Override
         public String toString(){
             return String.format("Name: %s\nAddress: %s\nSSN: %s\nBalance: %s", this.name, this.address, this.SSN, this.balance);
@@ -62,19 +53,24 @@ public class Bank{
             this.balance = balance;
         }
 
-        //deposit method takes an amount and adds it into the balance of the user
+        /**
+         * Increases user balance by given amount
+         * @param amount to deposit into user account
+         */
         public void deposit(double amount){
             this.balance += amount;
         }
         
-        //withdraw method takes an amount and subtracts it from the balance of the user
+        /**
+         * Decreases user balance by given amount
+         * @param amount to withdraw into user account
+         */
         public void withdraw(double amount){
             this.balance -= amount;
         }
     }
 
     //Constructors
-    //By default creates an empty LinkedList of accounts because no accounts exist
     Bank(){
         this.Accounts = new LinkedList<>();
     }
@@ -84,19 +80,27 @@ public class Bank{
         return this.Accounts.getHeadIndex();
     }
 
+    /**
+     * Return the median index value of all of the accounts in the Bank
+     */
     public int getMedianIndex(){
         return this.Accounts.findMedianIndex();
     }
 
+    /**
+     * Prints the empty indexes in the Bank
+     */
     public void emptyAccounts(){
         this.Accounts.findEmptyIndexes().print();
     }
 
+    /**
+     * Returns if the Bank has no accounts
+     */
     public boolean isEmpty(){
         return this.Accounts.isEmpty();
     }
 
-    //For testing purposes only
     public void print(){
         if (Accounts.isEmpty())
             System.out.println("No bank accounts");
@@ -104,41 +108,68 @@ public class Bank{
             this.Accounts.print();
         }
     }
+
     //Setter Methods
-    //addUser takes in information and adds a new Account into the LinkedList at the first available ID (empty slot)
-    //Functionality of inserting is handled by LinkedList class, only have to pass data along
+    /**
+     * Creates a new Account with the specified user information and adds it to the list of accounts.
+     * @param name     the user's name
+     * @param address  the user's address
+     * @param SSN      the user's Social Security Number
+     * @param balance  the user's initial account balance
+     */
     public void addUser(String name, String address, int SSN, double balance){
         this.Accounts.addNode(new Account(name, address, SSN, balance));
     }
 
-    //addUser defaults to 0 balance if balance is not given
+    /**
+     * Creates a new Account with the specified user information and adds it to the list of accounts.
+     * With no given initial bank balance, balance is default set to 0
+     * @param name     the user's name
+     * @param address  the user's address
+     * @param SSN      the user's Social Security Number
+     */
     public void addUser(String name, String address, int SSN){
         this.addUser(name, address, SSN, 0.0);
     }
 
-    //addUser can also take in a Account variable
+    /**
+     * Adds a user into the Bank
+     * @param user User information wrapped into a Bank class Object
+     */
     public void addUser(Account user){
         this.Accounts.addNode((user));
     }
 
+    /**
+     * Adds a user into the Bank at the specified index
+     * @param user User information wrapped into a Bank class Object
+     * @param index Given index to insert user into the bank
+     */
     public void addUser(Account user, int index){
         this.Accounts.addNodeAtIndex(user, index);
     }
 
-    //delete removes and account from the LinkedList of accounts
-    //Similar to addUser, functionatly is handled by LinkedList, only pass ID of the account
+    /**
+     * Deletes a user from the Bank
+     * @param ID Index of the user to be deleted
+     */
     public void deleteUser(int ID){
         this.Accounts.deleteNode(ID);
     }
 
+    /**
+     * Deletes the first Account from the Bank
+     */
     public Account deleteFirstUser(){
         return Accounts.deleteFirstNode();
     }
 
-    //Finds two accounts from the LinkedList of accounts, removes amount from first account, adds amount to second account
-    //Does nothing if either account is not found or does not exist
-    //LinkedList handles finding of account by ID
-    //Accounts are passed back to Bank, and withdraw and deposit handled by Account class
+    /**
+     * Transfer money from payer Account into Payee account
+     * @param payerID Index of the Payer
+     * @param payeeID Index of the Payee
+     * @param amount Amount to be transfered between the accounts
+     */
     public void payToUser(int payerID, int payeeID, double amount){
         Account payer = this.Accounts.findData(payerID);
         Account payee = this.Accounts.findData(payeeID);
@@ -148,9 +179,13 @@ public class Bank{
         }
     }
 
-    //LinkedList finds two accounts, and if both accounts exist
-    //Merge the balance of both accounts into the earlier Account in the LinkedList
-    //Delete the later Account in the LinkedList
+    /**
+     * Finds the merges two Accounts into one if given IDs of both accounts are found
+     * First index of the two Account stays, the balance is moved into the first Account
+     * The second Account is deleted from the Bank
+     * @param firstID One of the given IDs to search for. Order does not matter
+     * @param secondID Second of the given IDs to search for. Order does not matter
+     */
     public void mergeAccounts(int firstID, int secondID){
         int smallerID = firstID < secondID ? firstID : secondID;
         int largerID = firstID < secondID ? secondID : firstID;
@@ -162,22 +197,12 @@ public class Bank{
         }
     }
 
-    //mergeBanks method will return a Bank with a merged LinkedList from
-    //two given Bank parameters
-
-    //Create two empty LinkedLists, one called merged, and one called conflicted
-    //Merged will hold the merged accounts between the two banks depending on the ID
-    //Conflicted will hold conflicted account from bankTwo if accounts from both
-    //BankOne and BankTwo have the same ID
-
-    //Keep iterating through both banks and sort the accounts of both banks into merged and conflicted
-    //IDs do not have to be sequential order during the merge
-
-    //Once all accounts have been interated through and deleted in both banks
-    //Merge already has all the non conflicted accounts and handled the conflicted accounts
-    //Conflicted will now be added into the merged LinkedList, inserting each individual account
-    //into the first available ID slot
-    //Return the new Bank with the merged LinkedList
+    /**
+     * Merges the accounts from two Bank instances into a single new Bank
+     * @param bankOne the first bank whose accounts will be merged
+     * @param bankTwo the second bank whose accounts will be merged
+     * @return a new Bank object containing the merged list of accounts
+     */
     public Bank mergeBanks(Bank bankOne, Bank bankTwo){
         LinkedList<Account> merged = new LinkedList<>();
         LinkedList<Account> conflicted = new LinkedList<>();

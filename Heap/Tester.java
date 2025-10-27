@@ -11,10 +11,10 @@ public class Tester{
             maximumTree.insert(Math.abs(random.nextInt() % 1000000));
         }
         
-        Tree<Integer> smallToLarge = new Tree<>();
+        CompleteBinaryTree<Integer> smallToLarge = new CompleteBinaryTree<>();
         smallToLarge.insert(minimumTree.getMinHeap());
 
-        Tree<Integer> largeToSmall = new Tree<>();
+        CompleteBinaryTree<Integer> largeToSmall = new CompleteBinaryTree<>();
         largeToSmall.insert(maximumTree.getMaxHeap());
         largeToSmall.printBFS();
     }

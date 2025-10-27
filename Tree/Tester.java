@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class Tester{
     public static void main(String args[]){
-        Tree<Student> students = new Tree<>();
+        BST<Student> students = new BST<>();
         try{
             Scanner reader = new Scanner(new File("./Tree/tree-input.txt"));
             while (reader.hasNext()){
@@ -14,6 +14,7 @@ public class Tester{
                 else if (data.substring(0, 1).equals("D"))
                     students.deleteNode(new Student(data.substring(1)));
             }
+            reader.close();
             students.printDFS();
         }
         catch(FileNotFoundException ex){

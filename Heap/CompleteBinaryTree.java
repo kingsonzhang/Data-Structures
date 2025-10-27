@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Queue;
 
-public class Tree<T extends Comparable<T>>{
+public class CompleteBinaryTree<T extends Comparable<T>>{
     private Node<T> head;
 
     protected class Node<T extends Comparable<T>>{
@@ -71,15 +71,20 @@ public class Tree<T extends Comparable<T>>{
     }
 
     //Constructors
-    public Tree(){
+    public CompleteBinaryTree(){
         this.head = null;
     }
 
     //Getter Methods
+    /**
+     * Finds the maximum depth of the Tree
+     * @return int of the max depth of the Tree
+     */
     public int getTreeDepth(){
         return this.getDepth(this.head);
     }
 
+    //Helper function to find the depth of the Tree recursively
     private int getDepth(Node current){
         if (current == null)
             return 0;
@@ -89,10 +94,14 @@ public class Tree<T extends Comparable<T>>{
             return 1 + Math.max(this.getDepth(current.getLeftNode()), this.getDepth(current.getRightNode()));
     }
 
+    /**
+     * Prints the contents of the Tree using Depth First Search
+     */
     public void printDFS(){
         this.DFS(this.head);
     }
 
+    //Helper function to recursively print out each element in a DPS
     private void DFS(Node current){
         if (current != null){
             if (current.getLeftNode() != null)
@@ -103,6 +112,9 @@ public class Tree<T extends Comparable<T>>{
         }
     }
 
+    /**
+     * Prints the contents of the Tree using Breadth First Search
+     */
     public void printBFS(){
         Queue<Node> queue = new LinkedList<>();
         Queue<Node> BFS = new LinkedList<>();
@@ -121,12 +133,16 @@ public class Tree<T extends Comparable<T>>{
     }
 
     //Setter Methods
+    /**
+     * Inserts the data into the CompleteBinaryTree at the first available Node breadth first
+     * @param data to be inserted
+     */
     public void insert(T data){
         if (this.head == null)
             this.head = new Node<>(data);
         else{
             boolean inserted = false;
-            Queue<Node> queue = new LinkedList<>();
+            Queue<Node<T>> queue = new LinkedList<>();
             queue.add(this.head);
             while (!inserted){
                 Node<T> element = queue.remove();
@@ -147,6 +163,10 @@ public class Tree<T extends Comparable<T>>{
         }
     }
 
+    /**
+     * Converts a given ArrayList into a Complete Binary Tree
+     * @param list that will be converted into a Complete Binary Tree
+     */
     public void insert(ArrayList<T> list){
         for (int i = 0; i < list.size(); i++)
             this.insert(list.get(i));

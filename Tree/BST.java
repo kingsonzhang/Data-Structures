@@ -1,8 +1,7 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Tree<T extends Comparable<T>>{
+public class BST<T extends Comparable<T>>{
     private Node<T> head;
 
     protected class Node<T extends Comparable<T>>{
@@ -71,15 +70,20 @@ public class Tree<T extends Comparable<T>>{
     }
 
     //Constructors
-    public Tree(){
+    public BST(){
         this.head = null;
     }
 
     //Getter Methods
+    /**
+     * Finds the maximum depth of the Tree
+     * @return int of the max depth of the Tree
+     */
     public int getTreeDepth(){
         return this.getDepth(this.head);
     }
 
+    //Helper function to find the depth of the Tree recursively
     private int getDepth(Node current){
         if (current == null)
             return 0;
@@ -89,10 +93,14 @@ public class Tree<T extends Comparable<T>>{
             return 1 + Math.max(this.getDepth(current.getLeftNode()), this.getDepth(current.getRightNode()));
     }
 
+    /**
+     * Prints the contents of the Tree using Depth First Search
+     */
     public void printDFS(){
         this.DFS(this.head);
     }
 
+    //Helper function to recursively print out each element in a DPS
     private void DFS(Node current){
         if (current != null){
             if (current.getLeftNode() != null)
@@ -103,6 +111,9 @@ public class Tree<T extends Comparable<T>>{
         }
     }
 
+    /**
+     * Prints the contents of the Tree using Breadth First Search
+     */
     public void printBFS(){
         Queue<Node> queue = new LinkedList<>();
         Queue<Node> BFS = new LinkedList<>();
@@ -121,6 +132,11 @@ public class Tree<T extends Comparable<T>>{
     }
 
     //Setter Methods
+    /**
+     * Inserts the data into the Binary Search Tree
+     * If data at the Node is equivalent, insert on the left side of Node
+     * @param data data to be inserted into the Binary Search Tree
+     */
     public void insert(T data){
         if (this.head == null)
             this.head = new Node<>(data);
@@ -128,7 +144,7 @@ public class Tree<T extends Comparable<T>>{
             this.insertAtNode(data, this.head);
     }
 
-    //If data comparison at node is equivalent, insert on left side of tree
+    //Helper method to loop through the Tree to insert T data
     private void insertAtNode(T data, Node<T> current){
         if (current.getData().compareTo(data) > 0)
             if (current.getLeftNode() == null)
@@ -142,6 +158,10 @@ public class Tree<T extends Comparable<T>>{
                 this.insertAtNode(data, current.getRightNode());
     }
 
+    /**
+     * Delete a Node from the BST tree
+     * @param data to be deleted from the Tree
+     */
     public void deleteNode(T data){
         if (this.head != null){
             if (this.head.getData().equals(data)){
@@ -209,10 +229,5 @@ public class Tree<T extends Comparable<T>>{
                 }
             }
         }
-    }
-
-    public void insert(ArrayList<Integer> maxHeap) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 }

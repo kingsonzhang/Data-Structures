@@ -14,6 +14,10 @@ public class MaxHeap<T extends Comparable<T>>{
     }
 
     //Setter Methods
+    /**
+     * Insert the data into the MaxHeap and bubble down the data if necessary
+     * @param data to be inserted into the MaxHeap
+     */
     public void insert(T data){
         this.list.add(data);
         int index = this.list.size() - 1;
@@ -31,11 +35,15 @@ public class MaxHeap<T extends Comparable<T>>{
         }
     }
 
+    /**
+     * Delete the head data of the MaxHeap
+     */
     public void deleteMin(){
         this.list.set(0, this.list.remove(this.list.size() - 1));
         this.maxHeapify(0);
     }
 
+    //Helper function to remove the head data and bubble down the data
     public void maxHeapify(int index){
         int leftChildIndex = 2 * index + 1;
         int rightChildIndex = 2 * index + 2;

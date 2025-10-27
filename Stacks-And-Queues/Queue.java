@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Queue{
     private ArrayList<Object> list;
 
-    //Constructor simply initializes ArrayList list
+    //Constructors
     public Queue(){
         this.list = new ArrayList<>();
     }

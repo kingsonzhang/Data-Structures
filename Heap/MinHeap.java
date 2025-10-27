@@ -14,6 +14,10 @@ public class MinHeap<T extends Comparable<T>>{
     }
 
     //Setter Methods
+    /**
+     * Insert the data into the MinHead and bubble up the data if necessary
+     * @param data to be deleted from the MinHead
+     */
     public void insert(T data){
         this.list.add(data);
         int index = this.list.size() - 1;
@@ -31,12 +35,16 @@ public class MinHeap<T extends Comparable<T>>{
         }
     }
 
+    /**
+     * Delete the data at the head of the MinHeap
+     */
     public void deleteMin(){
         this.list.set(0, this.list.remove(this.list.size() - 1));
         this.minHeapify(0);
     }
 
-    public void minHeapify(int index){
+    //Helper function to bubble down the data after the head of the MinHeap has been removed
+    private void minHeapify(int index){
         int leftChildIndex = 2 * index + 1;
         int rightChildIndex = 2 * index + 2;
         if (leftChildIndex < this.list.size()){

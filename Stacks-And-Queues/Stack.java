@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Stack{
     private ArrayList<Object> list;
 
-    //Constructor simply initializes the ArrayList
+    //Constructors
     public Stack(){
         this.list = new ArrayList<>();
     }

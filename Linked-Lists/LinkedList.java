@@ -117,6 +117,10 @@ public class LinkedList<T>{
         return current.getIndex();
     }
     
+    /**
+     * Finds and returns a list of indexes where no nodes exist in the linked list.
+     *  @return A {@link LinkedList} containing the empty indexes in ascending order between nodes in the linked list.
+     */
     public LinkedList<Integer> findEmptyIndexes(){
         LinkedList<Integer> emptyIndexes = new LinkedList<>();
         if (this.getHeadNode().getIndex() != 0)
@@ -132,7 +136,6 @@ public class LinkedList<T>{
         return emptyIndexes;
     }
 
-    //For testing purposes only
     public void print(){
         Node current = this.getHeadNode();
         while (current != null){
@@ -141,12 +144,10 @@ public class LinkedList<T>{
         }
     }
 
-    //Setter Methods
-    //addNode adds Nodes into the LinkedList. Handles the functionality of indexing each Node
-    //If LinkedList is empty, the Node added will be the first in the LinkedList, starting with ID = 1
-    //Additional Nodes will be added in a few ways. First, if LinkedList is empty, insert data at head with index 1
-    //Second, if head index is not 1 (meaning head node was deleted at some point), insert Node at head
-    //Otherwise, add the Node at the end of the LinkedList
+    /**
+     * Adds a new node containing the specified T data to the linked list.
+     * @param data the data to store in the new node
+     */
     public void addNode(T data){
         if (this.head == null){
             this.head = new Node(data, 0, null);
@@ -167,6 +168,11 @@ public class LinkedList<T>{
         }
     }
 
+    /**
+     * Inserts a new node containing the specified data at the given index in the linked list.
+     * @param data the T data to store in the new node
+     * @param index the index at which the new node should be inserted
+     */
     public void addNodeAtIndex(T data, int index){
         if (this.isEmpty() || this.getHeadNode().getIndex() > index){
             this.head = new Node(data, index, null);
@@ -180,7 +186,10 @@ public class LinkedList<T>{
         }
     }
 
-    //Removes the first Node from the LinkedList
+    /**
+     * Removes and returns the data from the first node (head) of the linked list.
+     * @return the data contained in the deleted head node, or null if the list is empty
+     */
     public T deleteFirstNode(){
         Node deleted = this.getHeadNode();
         if (deleted != null){
@@ -191,13 +200,18 @@ public class LinkedList<T>{
         return null;
     }
 
-    //Removes the entire LinkedList, resetting the head to null
+    /**
+     * Removes the entire LinkedList, resetting the head to null
+     */
     public void deleteAll(){
         this.head = null;
         this.count = 0;
     }
 
-    //Finds and deletes a Node with a given ID
+    /**
+     * Deletes the node with the specified index from the linked list.
+     * @param ID the index of the node to delete
+     */
     public void deleteNode(int ID){
         Node current = this.head;
         if (current != null){

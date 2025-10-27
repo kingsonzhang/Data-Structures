@@ -8,7 +8,12 @@ public class Calculator{
         }
     }
 
-    
+    /**
+     * Evaluates a mathematical expression given in the parameter
+     * @param expression the mathematical expression to evaluate in String format. Cannot handle negative numbers currently
+     * @return the numeric result of evaluating the expression
+     * @throws Exception if the expression is empty, invalid, or cannot be processed
+     */
     public double calculate(String expression) throws Exception{
         Queue postfix = this.convertToPostfix(expression);
         if (postfix != null){
@@ -36,20 +41,12 @@ public class Calculator{
         }
     }
 
-    //Converts an expression into postfix notation
-    //Will throw an exception if expression is not valid
-
-    //Step by step rules for how postfix conversion works
-    //Create a stack and queue. The queue will hold the converted postfix notation
-
-    //When a "(" is encountered, immediately push onto the stack
-    //When a ")" is encountered, immediately pop everything onto the stack and enqueue into the queue
-    //until a "(" is encountered. If not encountered, invalid expression
-
-    //When either a "*" or "/" is encountered, immediately push onto the stack
-    //When either a "+" or "-" is encountered, pop all "*" and "/" signs and enqueue them
-
-    //When a number is encountered, immediately enqueue the number
+    /**
+     * Converts a mathematical expression given in the parameter into postfix notation
+     * @param expression the mathematical expression to evaluate in String format. Cannot handle negative numbers currently
+     * @return postfix notation of given parameter as a String
+     * @throws Exception if the expression is empty, invalid, or cannot be processed
+     */
     private Queue convertToPostfix(String expression) throws Exception{
         Queue postfixNotation = new Queue();
         String[] pieces = expression.split(" ");
